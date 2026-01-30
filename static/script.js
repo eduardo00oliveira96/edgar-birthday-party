@@ -296,6 +296,85 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
+    // Particle/confetti effect with Edgar's favicon
+    function createEdgarParticles() {
+        const particleContainer = document.createElement('div');
+        particleContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        `;
+        document.body.appendChild(particleContainer);
+
+        function createParticle() {
+            const particle = document.createElement('img');
+            particle.src = '/images/didi-favicon.png';
+            particle.style.cssText = `
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                object-fit: contain;
+                opacity: 0.8;
+                animation: fall linear forwards;
+            `;
+
+            // Random horizontal position
+            const startX = Math.random() * 100;
+            particle.style.left = `${startX}%`;
+            particle.style.top = '-30px';
+
+            // Random animation duration and delay
+            const duration = 3 + Math.random() * 4; // 3-7 seconds
+            const delay = Math.random() * 2; // 0-2 seconds delay
+
+            particle.style.animation = `fall ${duration}s linear ${delay}s forwards`;
+
+            particleContainer.appendChild(particle);
+
+            // Remove particle after animation completes
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, (duration + delay) * 1000);
+        }
+
+        // Create 15-25 particles per burst
+        const particleCount = 15 + Math.floor(Math.random() * 11);
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(createParticle, i * 100); // Stagger particle creation
+        }
+    }
+
+    // Add CSS for particle animation
+    const particleStyle = document.createElement('style');
+    particleStyle.textContent = `
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(particleStyle);
+
+    // Start particle effect every 5 seconds
+    setInterval(createEdgarParticles, 5000);
+
+    // Also trigger particles on special events
+    window.createSpecialParticles = function () {
+        createEdgarParticles();
+    };
+
     // Add to calendar functionality
     window.addToCalendar = function () {
         const startDate = new Date('2026-05-05T18:30:00');
