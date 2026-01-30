@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-    // Particle/confetti effect with Edgar's favicon
+    // Particle/confetti effect with colorful confetti
     function createEdgarParticles() {
         const particleContainer = document.createElement('div');
         particleContainer.style.cssText = `
@@ -310,32 +310,65 @@ document.addEventListener('DOMContentLoaded', function () {
             overflow: hidden;
         `;
         document.body.appendChild(particleContainer);
-
+    
+        // Confetti colors matching the theme
+        const colors = ['#FFD700', '#8B4513', '#FFA500', '#CD853F', '#DAA520', '#B8860B'];
+        
+        // Confetti shapes
+        const shapes = ['rectangle', 'circle', 'triangle'];
+    
         function createParticle() {
-            const particle = document.createElement('img');
-            particle.src = '/images/didi-favicon.png';
-            particle.style.cssText = `
-                position: absolute;
-                width: 30px;
-                height: 30px;
-                object-fit: contain;
-                opacity: 0.8;
-                animation: fall linear forwards;
-            `;
-
+            const particle = document.createElement('div');
+            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Different styles for different shapes
+            if (shape === 'rectangle') {
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${8 + Math.random() * 12}px;
+                    height: ${4 + Math.random() * 8}px;
+                    background: ${color};
+                    opacity: 0.8;
+                    animation: fall linear forwards;
+                    border-radius: 2px;
+                `;
+            } else if (shape === 'circle') {
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${6 + Math.random() * 10}px;
+                    height: ${6 + Math.random() * 10}px;
+                    background: ${color};
+                    opacity: 0.8;
+                    animation: fall linear forwards;
+                    border-radius: 50%;
+                `;
+            } else { // triangle
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    border-left: ${5 + Math.random() * 5}px solid transparent;
+                    border-right: ${5 + Math.random() * 5}px solid transparent;
+                    border-bottom: ${10 + Math.random() * 10}px solid ${color};
+                    opacity: 0.8;
+                    animation: fall linear forwards;
+                `;
+            }
+            
             // Random horizontal position
             const startX = Math.random() * 100;
             particle.style.left = `${startX}%`;
-            particle.style.top = '-30px';
-
+            particle.style.top = '-20px';
+            
             // Random animation duration and delay
             const duration = 3 + Math.random() * 4; // 3-7 seconds
             const delay = Math.random() * 2; // 0-2 seconds delay
-
+            
             particle.style.animation = `fall ${duration}s linear ${delay}s forwards`;
-
+            
             particleContainer.appendChild(particle);
-
+            
             // Remove particle after animation completes
             setTimeout(() => {
                 if (particle.parentNode) {
@@ -343,11 +376,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }, (duration + delay) * 1000);
         }
-
-        // Create 15-25 particles per burst
-        const particleCount = 15 + Math.floor(Math.random() * 11);
+        
+        // Create 25-35 particles per burst (more since they're smaller)
+        const particleCount = 25 + Math.floor(Math.random() * 11);
         for (let i = 0; i < particleCount; i++) {
-            setTimeout(createParticle, i * 100); // Stagger particle creation
+            setTimeout(createParticle, i * 80); // Faster stagger for more density
         }
     }
 
