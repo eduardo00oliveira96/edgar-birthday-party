@@ -1,0 +1,21 @@
+# Arquivos do sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Logs
+*.log
+download-log.txt
+
+# Pastas temporárias
+node_modules/
+.tmp/
+temp/
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos compilados
+*.min.css
+*.min.js

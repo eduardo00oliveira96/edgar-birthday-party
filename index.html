@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festa do Rei Leão - Aniversário do Edgar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Preloader/Entrance Screen -->
+    <div class="preloader" id="preloader">
+        <div class="lion-animated">
+            <img src="https://www.imagensanimadas.com/data/media/1321/o-rei-leao-imagem-animada-0019.gif"
+                alt="Rei Leão Animado" class="lion-gif">
+        </div>
+        <div class="invitation-badge">
+            <i class="fas fa-envelope"></i>
+            <span>VOCÊ ESTÁ CONVIDADO!</span>
+        </div>
+        <h1 class="main-title">Bem-vindo à Jornada</h1>
+        <h2 class="subtitle">Festa do Rei Leão</h2>
+        <p class="invitation-text">Você está convidado para celebrar o aniversário de <span
+                class="highlight">EDGAR</span></p>
+        <button class="enter-button" id="enterButton">
+            <span>Entrar na Savana</span>
+            <i class="fas fa-paw"></i>
+        </button>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header class="header">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>Reino de Edgar</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#gallery">Galeria</a></li>
+                    <li><a href="#schedule">Programação</a></li>
+                    <li><a href="#menu">Cardápio</a></li>
+                    <li><a href="#games">Diversão Garantida</a></li>
+                    <li><a href="#gifts">Presentes</a></li>
+                    <li><a href="#location">Localização</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="invitation-badge">
+                        <i class="fas fa-envelope"></i>
+                        <span>VOCÊ ESTÁ CONVIDADO!</span>
+                    </div>
+                    <h1 class="hero-title">Feliz Aniversário <span class="name">Edgar!</span></h1>
+                    <p class="hero-subtitle">Uma jornada épica te espera na savana!</p>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-label">Dias</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-label">Horas</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-label">Minutos</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds">00</span>
+                            <span class="countdown-label">Segundos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="lion-character">
+                        <div class="lion-head">
+                            <div class="lion-mane"></div>
+                            <div class="lion-face-front">
+                                <div class="lion-eyes">
+                                    <div class="eye-front"></div>
+                                    <div class="eye-front"></div>
+                                </div>
+                                <div class="lion-nose"></div>
+                                <div class="lion-mouth"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Gallery Carousel -->
+        <section class="gallery" id="gallery">
+            <div class="section-header">
+                <h2 class="section-title">Memórias da Jornada</h2>
+                <p class="section-subtitle">Momentos especiais do nosso pequeno rei</p>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <div class="carousel-slide active">
+                        <img src="images/WhatsApp Image 2026-01-16 at 19.36.29.jpeg" alt="Foto 1">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.41.03.jpeg" alt="Foto 2">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.42.40.jpeg" alt="Foto 3">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.43.57.jpeg" alt="Foto 4">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.44.23.jpeg" alt="Foto 5">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.47.21.jpeg" alt="Foto 6">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.47.42.jpeg" alt="Foto 7">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.51.19.jpeg" alt="Foto 8">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 09.52.55.jpeg" alt="Foto 9">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 10.00.41.jpeg" alt="Foto 10">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 10.01.27.jpeg" alt="Foto 11">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/WhatsApp Image 2026-01-18 at 10.01.46.jpeg" alt="Foto 12">
+                        <div class="slide-content">
+                            <h3>Momento Especial</h3>
+                            <p>Memórias inesquecíveis</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-indicators" id="indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                    <span class="indicator" data-slide="4"></span>
+                    <span class="indicator" data-slide="5"></span>
+                    <span class="indicator" data-slide="6"></span>
+                    <span class="indicator" data-slide="7"></span>
+                    <span class="indicator" data-slide="8"></span>
+                    <span class="indicator" data-slide="9"></span>
+                    <span class="indicator" data-slide="10"></span>
+                    <span class="indicator" data-slide="11"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section class="schedule" id="schedule">
+            <div class="section-header">
+                <h2 class="section-title">Programação da Jornada</h2>
+                <p class="section-subtitle">O grande dia do nosso futuro rei</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>18:30 - Chegada dos Convidados e presentes</h3>
+                        <p>Bem-vindos à savana! Os animais começam a se reunir para celebrar nosso pequeno príncipe.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>19:00 - 20:30 - Brincadeiras no parquinho</h3>
+                        <p>Os pequenos animais se divertem nas atividades do parquinho enquanto aguardam o momento
+                            especial.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>20:30 - 🎉 Parabéns ao Nosso Rei 🎉</h3>
+                        <p>Momento emocionante: cantamos parabéns e apagamos as velinhas do bolo real!</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>20:50 - Banquete Real</h3>
+                        <p>Hora do delicioso banquete preparado especialmente para o nosso rei.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>21:30 - Final da Jornada</h3>
+                        <p>Tempo de voltar para casa, mas as memórias ficarão para sempre!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section class="menu" id="menu">
+            <div class="section-header">
+                <h2 class="section-title">Banquete do Buffet</h2>
+                <p class="section-subtitle">Delícias que estarão disponíveis no nosso evento</p>
+            </div>
+            <div class="food-lion-container">
+                <img src="https://www.imagensanimadas.com/data/media/1321/o-rei-leao-imagem-animada-0067.gif"
+                    alt="Rei Leão - Área de Comida" class="food-lion-gif">
+            </div>
+            <div class="menu-container">
+                <div class="menu-category">
+                    <h3 class="category-title"><i class="fas fa-utensils"></i> Entradas</h3>
+                    <ul class="menu-items">
+                        <li class="menu-item">
+                            <span class="item-name">Salgadinhos Variados</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Doces Variados</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Mini Pizza</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Mini Dog</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Pipoca Gourmet</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Mini Churros</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Batata Frita</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Dadinhos de Tapioca</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-category">
+                    <h3 class="category-title"><i class="fas fa-drumstick-bite"></i> Jantar</h3>
+                    <ul class="menu-items">
+                        <li class="menu-item">
+                            <span class="item-name">Arroz Branco</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Frango ao Molho Branco</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Salada Mix</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Penne ao Molho Carbonara</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Spaghetti Nordestino</span>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="menu-category">
+                    <h3 class="category-title"><i class="fas fa-wine-bottle"></i> Bebidas</h3>
+                    <ul class="menu-items">
+                        <li class="menu-item">
+                            <span class="item-name">Coca-Cola</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Guaraná</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Suco de Fruta da Estação</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Suco de Fruta da Estação</span>
+                        </li>
+                        <li class="menu-item">
+                            <span class="item-name">Água Mineral</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section class="games" id="games">
+            <div class="section-header">
+                <h2 class="section-title">Jogos e Diversão</h2>
+                <p class="section-subtitle">Entretenimento especial para o nosso pequeno rei</p>
+            </div>
+            <div class="games-container">
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Caça-Emoji do Edgar</h3>
+                    <p>Encontre o leãozinho especial do Edgar em meio aos outros animais da savana!</p>
+                    <p class="game-details">⏱️ Tempo: 12 segundos | 🎯 Níveis progressivos</p>
+                    <a href="game.html" class="play-game-btn">
+                        <i class="fas fa-play"></i> Jogar Agora
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Playground Section -->
+        <section class="playground" id="playground">
+            <div class="section-header">
+                <h2 class="section-title">Diversão Garantida</h2>
+                <p class="section-subtitle">Brinquedos e atividades para todas as idades</p>
+            </div>
+            <div class="playground-container">
+                <div class="playground-grid">
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-basketball-ball"></i>
+                        </div>
+                        <h3>Basquete Eletrônico</h3>
+                        <p>Jogo interativo com placar digital e efeitos sonoros</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3>Air Hockey</h3>
+                        <p>Mesa que sopra ar e disco desliza rapidamente de um lado para outro!</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <h3>Cama Elástica</h3>
+                        <p>Pula-pula profissional com rede de segurança</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h3>Lambamba (Samba)</h3>
+                        <p>Brinquedo onde você entra dentro e ele fica girando e balançando ao som da música!</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-circle-notch"></i>
+                        </div>
+                        <h3>Roda Gigante</h3>
+                        <p>Vista panorâmica da festa em cabines confortáveis</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3>Splash (Realidade Aumentada)</h3>
+                        <p>Experiência interativa com tecnologia de ponta</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Video Game</h3>
+                        <p>Retro e atual - Diversão para todas as gerações</p>
+                    </div>
+
+                    <div class="playground-item">
+                        <div class="item-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h3>Espaço 1-2 anos</h3>
+                        <p>Área especial para os pequenos explorarem</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gift Preferences Section -->
+        <section class="gifts" id="gifts">
+            <div class="section-header">
+                <h2 class="section-title">Presentes & Preferências</h2>
+                <p class="section-subtitle">Ajude-nos a escolher o melhor presente para o nosso pequeno rei</p>
+            </div>
+            <div class="gift-lion-container">
+                <img src="https://www.imagensanimadas.com/data/media/1321/o-rei-leao-imagem-animada-0148.gif"
+                    alt="Rei Leão - Área de Presentes" class="gift-lion-gif">
+            </div>
+            <div class="gifts-container">
+                <div class="preferences-grid">
+                    <div class="preference-card">
+                        <div class="card-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3>Brinquedos Favoritos</h3>
+                        <ul class="preferences-list">
+                            <li>Carros e carrinhos</li>
+                            <li>Bolas</li>
+                            <li>Briquedos de Lógica</li>
+                        </ul>
+                    </div>
+
+                    <div class="preference-card">
+                        <div class="card-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h3>Roupas</h3>
+                        <div class="size-info">
+                            <p><strong>Tamanho atual:</strong> 2 anos</p>
+                            <p><strong>Altura:</strong> 0,83m</p>
+                            <p><strong>Peso:</strong> 10kg</p>
+                        </div>
+                        <div class="clothing-preferences">
+                            <p><strong>Estilos favoritos:</strong></p>
+                            <ul>
+                                <li>Roupas confortáveis</li>
+                                <li>Temas de super-heróis</li>
+                                <li>Cores: Azul, vermelho, preto</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="preference-card">
+                        <div class="card-icon">
+                            <i class="fas fa-shoe-prints"></i>
+                        </div>
+                        <h3>Calçados</h3>
+                        <div class="shoe-info">
+                            <p><strong>Número do sapato:</strong> 23</p>
+                            <p><strong>Preferências:</strong></p>
+                            <ul>
+                                <li>Tênis esportivos</li>
+                                <li>Sapatênis casual</li>
+                                <li>Sandálias confortáveis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pix-section">
+                    <div class="pix-card">
+                        <div class="pix-header">
+                            <i class="fas fa-qrcode"></i>
+                            <h3>Contribuição Financeira</h3>
+                            <p>Se preferir contribuir financeiramente, aqui está nosso PIX:</p>
+                        </div>
+
+                        <div class="pix-content">
+                            <div class="qr-code-area">
+                                <div class="qr-placeholder" id="qrCode">
+                                    <i class="fas fa-qrcode" style="font-size: 80px; color: #8B4513;"></i>
+                                    <p>QR CODE PIX</p>
+                                    <p class="small">Clique para gerar</p>
+                                </div>
+                            </div>
+
+                            <div class="pix-info">
+                                <div class="pix-key">
+                                    <label>Chave PIX:</label>
+                                    <div class="key-display">
+                                        <span id="pixKey">072.616.053-95</span>
+                                        <button class="copy-btn" onclick="copyPixKey()">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location" id="location">
+        <div class="section-header">
+            <h2 class="section-title">Local do Reino</h2>
+            <p class="section-subtitle">Onde nossa jornada começa</p>
+        </div>
+        <div class="location-content">
+            <div class="map-container">
+                <div class="map-placeholder" id="map">
+                    <div
+                        style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #8B4513, #D2691E); color:white; text-align:center; padding:20px;">
+                        <i class="fas fa-street-view" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3 style="margin-bottom: 15px;">Street View do Local</h3>
+                        <p style="margin-bottom: 20px;">R. Júlio Gaspar, 109 - Maraponga<br>Fortaleza - CE</p>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 20px;">Veja como é o local da
+                            festa!</p>
+                        <button onclick="openGoogleMaps()"
+                            style="background:#FFD700; color:#8B4513; border:none; padding:12px 25px; border-radius:25px; cursor:pointer; font-weight:bold; font-size: 1.1rem;">
+                            <i class="fas fa-eye"></i> Ver Street View
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="location-info">
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Buffet Infantil Kids World</h3>
+                    <p class="address">R. Júlio Gaspar, 109 - Maraponga<br>Fortaleza - CE, 60710-095</p>
+                    <div class="instructions">
+                        <h4>Instruções para Chegar:</h4>
+                        <p>O buffet Kids Party Buffet fica a 200m do posto de gasolina .</p>
+                    </div>
+                    <div class="ride-apps" style="margin-top: 25px;">
+                        <h4 style="margin-bottom: 15px; color: #8B4513;">Chegue de Forma Prática:</h4>
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <button onclick="openUber()"
+                                style="background: #000000; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                                <i class="fab fa-uber"></i> Uber
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i>
+                <span>Reino de Edgar</span>
+            </div>
+            <p class="copyright">© 2026 - Todos os direitos reservados para o futuro rei da selva!</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

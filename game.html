@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦁👑 Caça-Emoji do Edgar – 1 Aninho 👑🦁</title>
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="background">
+        <div class="sun"></div>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="grass"></div>
+        <div class="tree tree-1"></div>
+        <div class="tree tree-2"></div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">🦁👑 Caça-Emoji do Edgar – 1 Aninho 👑🦁</h1>
+        </header>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <div class="info-item">
+                <span class="info-label">Nível:</span>
+                <span class="info-value" id="level">1</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Pontos:</span>
+                <span class="info-value" id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Tempo:</span>
+                <span class="info-value" id="timer">12</span>s
+            </div>
+            <div class="info-item">
+                <button class="exit-btn" id="exitGame">
+                    <i class="fas fa-times"></i> Sair
+                </button>
+            </div>
+        </div>
+
+        <!-- Current Instruction -->
+        <div class="instruction" id="instruction">
+            Encontre: Leãozinho
+        </div>
+
+        <!-- Game Grid -->
+        <div class="game-grid" id="gameGrid">
+            <!-- Emojis will be generated here -->
+        </div>
+
+        <!-- Messages -->
+        <div class="message-container">
+            <div class="message" id="message"></div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div class="game-over" id="gameOver">
+            <div class="game-over-content">
+                <h2>🦁💛 Fim de Jogo!</h2>
+                <p id="finalMessage">Obrigado por comemorar o 1 aninho do Edgar!</p>
+                <div class="final-score">
+                    <p>Pontuação Final: <span id="finalScore">0</span></span></p>
+                    <p>Nível Alcançado: <span id="finalLevel">1</span></span></p>
+                </div>
+                <button class="play-again-btn" id="playAgain">
+                    <i class="fas fa-redo"></i> Jogar Novamente
+                </button>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Voltar para o Aniversário
+                </a>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <div class="start-content">
+                <h2>🦁👑 Bem-vindo ao Jogo! 👑🦁</h2>
+                <p>Encontre o leãozinho especial do Edgar entre os outros animais!</p>
+                <p>Tempo: 12 segundos | Toque no emoji diferente!</p>
+                <button class="start-btn" id="startGame">
+                    <i class="fas fa-play"></i> Começar a Jogar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Effect -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
