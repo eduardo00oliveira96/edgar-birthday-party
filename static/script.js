@@ -4,7 +4,22 @@
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const guestsParam = urlParams.get('guests');
+    const adminParam = urlParams.get('admin');
+    const inviteParam = urlParams.get('invite');
     
+    // Admin screen
+    if (adminParam === 'true') {
+        showAdminScreen();
+        return;
+    }
+    
+    // Individual guest invitation
+    if (inviteParam) {
+        showPersonalInvitation(inviteParam);
+        return;
+    }
+    
+    // Group guest list
     if (guestsParam) {
         showGuestList(guestsParam);
         return;
@@ -428,6 +443,459 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     }
     
+    // Admin Screen Function
+    function showAdminScreen() {
+        // Hide main content
+        const mainContent = document.getElementById('mainContent');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
+        
+        // Hide preloader if visible
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.display = 'none';
+        }
+        
+        // Create admin screen
+        const adminScreen = document.createElement('div');
+        adminScreen.id = 'admin-screen';
+        adminScreen.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        `;
+        
+        // Header
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <h1 style="color: #FFD700; font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 10px; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                <i class="fas fa-crown"></i> Painel Administrativo <i class="fas fa-crown"></i>
+            </h1>
+            <p style="color: #FFF8DC; font-size: 1.1rem; margin-bottom: 30px; text-align: center;">
+                Cadastro de Convidados - Aniversário do Edgar
+            </p>
+        `;
+        
+        // Admin panel container
+        const panelContainer = document.createElement('div');
+        panelContainer.style.cssText = `
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 95%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        `;
+        
+        // Guest input section
+        const inputSection = document.createElement('div');
+        inputSection.innerHTML = `
+            <h2 style="color: #8B4513; margin-bottom: 20px; text-align: center;">Cadastro de Convidados</h2>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; color: #8B4513; font-weight: 600;">Nome do Convidado:</label>
+                <input type="text" id="guestName" placeholder="Digite o nome completo" 
+                       style="width: 100%; padding: 12px; border: 2px solid #DDD; border-radius: 10px; font-size: 1rem; box-sizing: border-box;">
+            </div>
+            <button id="addGuestBtn" style="
+                background: linear-gradient(45deg, #FFD700, #FFA500);
+                color: #8B4513;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 25px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                margin-right: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            ">Adicionar Convidado</button>
+            <button id="generateLinksBtn" style="
+                background: linear-gradient(45deg, #8B4513, #A0522D);
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 25px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            ">Gerar Links</button>
+        `;
+        
+        // Guest list display
+        const listContainer = document.createElement('div');
+        listContainer.id = 'guestListContainer';
+        listContainer.style.cssText = `
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            padding: 15px;
+        `;
+        
+        listContainer.innerHTML = `
+            <h3 style="color: #8B4513; margin-bottom: 15px; text-align: center;">Convidados Cadastrados (0)</h3>
+            <div id="guestList" style="min-height: 50px;"></div>
+        `;
+        
+        // Generated links section
+        const linksContainer = document.createElement('div');
+        linksContainer.id = 'linksContainer';
+        linksContainer.style.cssText = `
+            margin-top: 30px;
+            display: none;
+        `;
+        
+        linksContainer.innerHTML = `
+            <h3 style="color: #8B4513; margin-bottom: 15px; text-align: center;">Links Gerados</h3>
+            <div id="generatedLinks" style="background: #f8f9fa; padding: 20px; border-radius: 10px;"></div>
+            <button id="copyAllLinks" style="
+                background: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 20px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 15px;
+                display: none;
+            ">Copiar Todos os Links</button>
+        `;
+        
+        // Back button
+        const backButton = document.createElement('button');
+        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Voltar para o Site';
+        backButton.onclick = function() {
+            window.location.href = window.location.origin + window.location.pathname;
+        };
+        backButton.style.cssText = `
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        `;
+        
+        // Assemble the screen
+        panelContainer.appendChild(inputSection);
+        panelContainer.appendChild(listContainer);
+        panelContainer.appendChild(linksContainer);
+        panelContainer.appendChild(backButton);
+        
+        adminScreen.appendChild(header);
+        adminScreen.appendChild(panelContainer);
+        
+        document.body.appendChild(adminScreen);
+        
+        // Initialize admin functionality
+        initializeAdminFunctionality();
+    }
+    
+    // Initialize admin functionality
+    function initializeAdminFunctionality() {
+        const guestNameInput = document.getElementById('guestName');
+        const addGuestBtn = document.getElementById('addGuestBtn');
+        const generateLinksBtn = document.getElementById('generateLinksBtn');
+        const guestList = document.getElementById('guestList');
+        const generatedLinks = document.getElementById('generatedLinks');
+        const linksContainer = document.getElementById('linksContainer');
+        const copyAllLinksBtn = document.getElementById('copyAllLinks');
+        
+        let guests = [];
+        
+        // Add guest function
+        addGuestBtn.addEventListener('click', function() {
+            const name = guestNameInput.value.trim();
+            if (name) {
+                guests.push(name);
+                guestNameInput.value = '';
+                updateGuestList();
+            }
+        });
+        
+        // Generate links function
+        generateLinksBtn.addEventListener('click', function() {
+            if (guests.length > 0) {
+                generateIndividualLinks(guests);
+            } else {
+                alert('Por favor, adicione pelo menos um convidado!');
+            }
+        });
+        
+        // Copy all links function
+        copyAllLinksBtn.addEventListener('click', function() {
+            const linksText = Array.from(document.querySelectorAll('.individual-link')).map(el => el.textContent).join('\n\n');
+            navigator.clipboard.writeText(linksText).then(() => {
+                alert('Todos os links foram copiados para a área de transferência!');
+            });
+        });
+        
+        // Update guest list display
+        function updateGuestList() {
+            const title = document.querySelector('#guestListContainer h3');
+            title.textContent = `Convidados Cadastrados (${guests.length})`;
+            
+            if (guests.length === 0) {
+                guestList.innerHTML = '<p style="text-align: center; color: #666;">Nenhum convidado cadastrado ainda.</p>';
+                return;
+            }
+            
+            guestList.innerHTML = '';
+            guests.forEach((guest, index) => {
+                const guestItem = document.createElement('div');
+                guestItem.style.cssText = `
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    margin: 8px 0;
+                    background: #FFF8DC;
+                    border-radius: 8px;
+                    border-left: 4px solid #FFD700;
+                `;
+                
+                guestItem.innerHTML = `
+                    <span style="font-weight: 500; color: #8B4513;">${index + 1}. ${guest}</span>
+                    <button onclick="removeGuest(${index})" style="
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        border-radius: 15px;
+                        cursor: pointer;
+                        font-size: 0.9rem;
+                    ">Remover</button>
+                `;
+                
+                guestList.appendChild(guestItem);
+            });
+        }
+        
+        // Generate individual links
+        function generateIndividualLinks(guestList) {
+            generatedLinks.innerHTML = '';
+            
+            guestList.forEach((guest, index) => {
+                const encodedName = encodeURIComponent(guest);
+                const link = `${window.location.origin}${window.location.pathname}?invite=${encodedName}`;
+                
+                const linkDiv = document.createElement('div');
+                linkDiv.style.cssText = `
+                    background: white;
+                    padding: 15px;
+                    margin: 15px 0;
+                    border-radius: 10px;
+                    border: 1px solid #DDD;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                `;
+                
+                linkDiv.innerHTML = `
+                    <div style="font-weight: 600; color: #8B4513; margin-bottom: 8px;">${index + 1}. ${guest}</div>
+                    <div class="individual-link" style="
+                        background: #f8f9fa;
+                        padding: 10px;
+                        border-radius: 5px;
+                        font-family: monospace;
+                        font-size: 0.9rem;
+                        word-break: break-all;
+                        margin-bottom: 10px;
+                    ">${link}</div>
+                    <button onclick="copyLink('${link}')" style="
+                        background: #17a2b8;
+                        color: white;
+                        border: none;
+                        padding: 8px 15px;
+                        border-radius: 20px;
+                        cursor: pointer;
+                        font-size: 0.9rem;
+                    ">Copiar Link</button>
+                `;
+                
+                generatedLinks.appendChild(linkDiv);
+            });
+            
+            linksContainer.style.display = 'block';
+            copyAllLinksBtn.style.display = 'block';
+        }
+        
+        // Make functions globally available
+        window.removeGuest = function(index) {
+            guests.splice(index, 1);
+            updateGuestList();
+        };
+        
+        window.copyLink = function(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Link copiado para a área de transferência!');
+            });
+        };
+        
+        // Initialize with empty list
+        updateGuestList();
+    }
+    
+    // Personal Invitation Function
+    function showPersonalInvitation(guestName) {
+        // Hide main content
+        const mainContent = document.getElementById('mainContent');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
+        
+        // Hide preloader if visible
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.display = 'none';
+        }
+        
+        // Decode guest name
+        const decodedName = decodeURIComponent(guestName);
+        
+        // Create personal invitation screen
+        const invitationScreen = document.createElement('div');
+        invitationScreen.id = 'personal-invitation';
+        invitationScreen.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        `;
+        
+        invitationScreen.innerHTML = `
+            <div style="
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 25px;
+                padding: 40px;
+                max-width: 600px;
+                width: 90%;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            ">
+                <h1 style="color: #8B4513; font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin-bottom: 20px;">
+                    🎉 Convite Especial 🎉
+                </h1>
+                
+                <div style="margin: 30px 0;">
+                    <i class="fas fa-crown" style="font-size: 3rem; color: #FFD700; margin-bottom: 20px;"></i>
+                    <h2 style="color: #8B4513; font-size: 2rem; margin: 20px 0;">Olá, ${decodedName}!</h2>
+                    <p style="font-size: 1.3rem; color: #666; margin: 20px 0; line-height: 1.6;">
+                        Você está convidado para a festa temática do <strong>Rei Leão</strong> em homenagem ao aniversário do nosso querido <strong>Edgar</strong>!
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(45deg, #FFF8DC, #FFEBCD); padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid #FFD700;">
+                    <h3 style="color: #8B4513; margin-bottom: 15px;">Hotéis o evento:</h3>
+                    <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-calendar-alt"></i> Data: 05/05/2026</p>
+                    <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-clock"></i> Horário: 18:30</p>
+                    <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-map-marker-alt"></i> Local: Buffet Kids World</p>
+                </div>
+                
+                <button onclick="window.location.href='${window.location.origin}${window.location.pathname}'" style="
+                    background: linear-gradient(45deg, #FFD700, #FFA500);
+                    color: #8B4513;
+                    border: none;
+                    padding: 15px 35px;
+                    border-radius: 30px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin-top: 25px;
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+                    transition: all 0.3s ease;
+                ">
+                    <i class="fas fa-paw"></i> Entrar na Savana
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(invitationScreen);
+        
+        // Add confetti effect
+        setInterval(createPersonalInvitationConfetti, 2000);
+    }
+    
+    // Confetti for personal invitation
+    function createPersonalInvitationConfetti() {
+        const container = document.getElementById('personal-invitation');
+        if (!container) return;
+        
+        const colors = ['#FFD700', '#8B4513', '#FFA500'];
+        
+        for (let i = 0; i < 6; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${8 + Math.random() * 12}px;
+                    height: ${4 + Math.random() * 8}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    opacity: 0.8;
+                    border-radius: 2px;
+                    animation: personalConfettiFall 5s linear forwards;
+                    left: ${Math.random() * 100}%;
+                    top: -20px;
+                `;
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 5000);
+            }, i * 200);
+        }
+    }
+    
+    // Add CSS for personal invitation confetti
+    const personalConfettiStyle = document.createElement('style');
+    personalConfettiStyle.textContent = `
+        @keyframes personalConfettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(personalConfettiStyle);
+    
     function showGuestList(guestsString) {
         // Hide main content
         const mainContent = document.getElementById('mainContent');
@@ -681,8 +1149,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Trigger confetti on special interactions
-    document.querySelector('.enter-button').addEventListener('click', window.createConfetti);
+    // Trigger confetti on special interactions (removed conflicting event listener)
 
     // Play celebration sound (if you have one)
     window.playCelebrationSound = function () {
@@ -692,6 +1159,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize everything
     console.log('🦁 Lion King Birthday Page Loaded Successfully!');
+});
 
 // Confetti function (global scope)
 function createConfetti() {
