@@ -1,0 +1,28 @@
+ğŸ“¸ INSTRUÃ‡Ã•ES PARA AS FOTOS DO CARROSSEL
+
+ğŸ“„ Coloque 4 fotos do Edgar nesta pasta com estes nomes exatos:
+
+1. edgar1.jpg - Foto do Edgar bebÃª (primeira imagem do carrossel)
+2. edgar2.jpg - Foto do Edgar crianÃ§a (segunda imagem)
+3. edgar3.jpg - Foto do Edgar sorrindo (terceira imagem)
+4. edgar4.jpg - Foto do Edgar brincando (quarta imagem)
+
+ğŸ“Œ RECOMENDAÃ‡Ã•ES:
+âœ… Tamanho ideal: 1200 x 800 pixels
+âœ… Formatos aceitos: JPG, PNG, WEBP
+âœ… Qualidade boa mas tamanho moderado (atÃ© 2MB por imagem)
+âœ… Fotos com boa iluminaÃ§Ã£o
+âœ… Imagens nÃ­tidas e claras
+
+ğŸ”„ COMO SUBSTITUIR:
+1. Copie suas fotos para esta pasta
+2. Renomeie-as exatamente como indicado acima
+3. Recarregue a pÃ¡gina no navegador
+
+ğŸ’¡ DICAS:
+- VocÃª pode usar o Paint, Photoshop ou qualquer editor para redimensionar
+- Se quiser manter a qualidade original, use PNG
+- Para arquivos menores, use JPG com qualidade 80-90%
+
+ğŸŽ¯ LOCALIZAÃ‡ÃƒO NA PÃGINA:
+As imagens aparecem na seÃ§Ã£o "MemÃ³rias da Jornada" (carrossel central)
