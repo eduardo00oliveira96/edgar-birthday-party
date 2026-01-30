@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     enterButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         preloader.classList.add('fade-out');
 
         setTimeout(() => {
@@ -20,9 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Initialize all components after entrance
             initializeComponents();
-            
-            // Prevent any scroll behavior
-            window.scrollTo(0, 0);
+
+            // Ensure we're at the top of the page
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
         }, 1000);
     });
 
@@ -214,7 +216,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                    // Add small delay to prevent immediate animation on page load
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, 100);
                 }
             });
         }, observerOptions);
