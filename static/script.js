@@ -1,8 +1,16 @@
 // Main JavaScript for Lion King Birthday Landing Page
 
+// Check for guest list first (before any other initialization)
 document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestsParam = urlParams.get('guests');
+    
+    if (guestsParam) {
+        showGuestList(guestsParam);
+        return;
+    }
 
-    // Preloader functionality
+    // Normal initialization continues here
     const preloader = document.getElementById('preloader');
     const mainContent = document.getElementById('mainContent');
     const enterButton = document.getElementById('enterButton');
@@ -11,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     enterButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-
+        
         preloader.classList.add('fade-out');
 
         setTimeout(() => {
@@ -20,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Initialize all components after entrance
             initializeComponents();
-
+            
             // Ensure we're at the top of the page
             setTimeout(() => {
                 window.scrollTo(0, 0);
@@ -310,18 +318,18 @@ document.addEventListener('DOMContentLoaded', function () {
             overflow: hidden;
         `;
         document.body.appendChild(particleContainer);
-    
+
         // Confetti colors matching the theme
         const colors = ['#FFD700', '#8B4513', '#FFA500', '#CD853F', '#DAA520', '#B8860B'];
-        
+
         // Confetti shapes
         const shapes = ['rectangle', 'circle', 'triangle'];
-    
+
         function createParticle() {
             const particle = document.createElement('div');
             const shape = shapes[Math.floor(Math.random() * shapes.length)];
             const color = colors[Math.floor(Math.random() * colors.length)];
-            
+
             // Different styles for different shapes
             if (shape === 'rectangle') {
                 particle.style.cssText = `
@@ -355,20 +363,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     animation: fall linear forwards;
                 `;
             }
-            
+
             // Random horizontal position
             const startX = Math.random() * 100;
             particle.style.left = `${startX}%`;
             particle.style.top = '-20px';
-            
+
             // Random animation duration and delay
             const duration = 3 + Math.random() * 4; // 3-7 seconds
             const delay = Math.random() * 2; // 0-2 seconds delay
-            
+
             particle.style.animation = `fall ${duration}s linear ${delay}s forwards`;
-            
+
             particleContainer.appendChild(particle);
-            
+
             // Remove particle after animation completes
             setTimeout(() => {
                 if (particle.parentNode) {
@@ -376,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }, (duration + delay) * 1000);
         }
-        
+
         // Create 25-35 particles per burst (more since they're smaller)
         const particleCount = 25 + Math.floor(Math.random() * 11);
         for (let i = 0; i < particleCount; i++) {
@@ -402,11 +410,245 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start particle effect every 5 seconds
     setInterval(createEdgarParticles, 5000);
-
+    
     // Also trigger particles on special events
-    window.createSpecialParticles = function () {
+    window.createSpecialParticles = function() {
         createEdgarParticles();
     };
+    
+    // Secret guest list functionality
+    function checkForGuestList() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestsParam = urlParams.get('guests');
+        
+        if (guestsParam) {
+            showGuestList(guestsParam);
+            return true;
+        }
+        return false;
+    }
+    
+    function showGuestList(guestsString) {
+        // Hide main content
+        const mainContent = document.getElementById('mainContent');
+        if (mainContent) {
+            mainContent.style.display = 'none';
+        }
+        
+        // Hide preloader if visible
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.display = 'none';
+        }
+        
+        // Parse guest names
+        const guests = guestsString.split(',').map(name => name.trim()).filter(name => name);
+        
+        // Create guest list screen
+        const guestScreen = document.createElement('div');
+        guestScreen.id = 'guest-screen';
+        guestScreen.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+            box-sizing: border-box;
+        `;
+        
+        // Header
+        const header = document.createElement('div');
+        header.innerHTML = `
+            <h1 style="color: #FFD700; font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 20px; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                <i class="fas fa-crown"></i> Lista de Convidados <i class="fas fa-crown"></i>
+            </h1>
+            <p style="color: #FFF8DC; font-size: 1.2rem; margin-bottom: 30px; text-align: center;">
+                Festa do Rei Leão - Aniversário do Edgar
+            </p>
+        `;
+        
+        // Guest list container
+        const listContainer = document.createElement('div');
+        listContainer.style.cssText = `
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        `;
+        
+        // Guest list
+        const listTitle = document.createElement('h2');
+        listTitle.textContent = `Convidados (${guests.length})`;
+        listTitle.style.cssText = `color: #8B4513; text-align: center; margin-bottom: 20px; font-size: 1.8rem;`;
+        
+        const guestList = document.createElement('ul');
+        guestList.style.cssText = `list-style: none; padding: 0; margin: 0;`;
+        
+        guests.forEach((guest, index) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    padding: 15px;
+                    margin: 10px 0;
+                    background: linear-gradient(45deg, #FFF8DC, #FFEBCD);
+                    border-radius: 12px;
+                    border-left: 5px solid #FFD700;
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    transition: transform 0.2s ease;
+                " onmouseover="this.style.transform='translateX(10px)'" onmouseout="this.style.transform='translateX(0)'">
+                    <span style="
+                        background: #8B4513;
+                        color: white;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-weight: bold;
+                    ">${index + 1}</span>
+                    <span style="font-size: 1.2rem; color: #8B4513; font-weight: 500;">${guest}</span>
+                </div>
+            `;
+            guestList.appendChild(listItem);
+        });
+        
+        // Back button
+        const backButton = document.createElement('button');
+        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Voltar para o Site';
+        backButton.onclick = function() {
+            window.location.href = window.location.origin + window.location.pathname;
+        };
+        backButton.style.cssText = `
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        `;
+        backButton.onmouseover = function() {
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+        };
+        backButton.onmouseout = function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+        };
+        
+        // Assemble the screen
+        listContainer.appendChild(listTitle);
+        listContainer.appendChild(guestList);
+        listContainer.appendChild(backButton);
+        
+        guestScreen.appendChild(header);
+        guestScreen.appendChild(listContainer);
+        
+        document.body.appendChild(guestScreen);
+        
+        // Add confetti effect to guest screen
+        setInterval(() => {
+            createGuestScreenConfetti();
+        }, 3000);
+    }
+    
+    // Special confetti for guest screen
+    function createGuestScreenConfetti() {
+        const container = document.getElementById('guest-screen');
+        if (!container) return;
+        
+        const colors = ['#FFD700', '#8B4513', '#FFA500', '#CD853F'];
+        const shapes = ['rectangle', 'circle'];
+        
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                if (shape === 'rectangle') {
+                    particle.style.cssText = `
+                        position: absolute;
+                        width: ${6 + Math.random() * 8}px;
+                        height: ${3 + Math.random() * 5}px;
+                        background: ${color};
+                        opacity: 0.7;
+                        border-radius: 2px;
+                        animation: guestConfettiFall 4s linear forwards;
+                    `;
+                } else {
+                    particle.style.cssText = `
+                        position: absolute;
+                        width: ${5 + Math.random() * 7}px;
+                        height: ${5 + Math.random() * 7}px;
+                        background: ${color};
+                        opacity: 0.7;
+                        border-radius: 50%;
+                        animation: guestConfettiFall 4s linear forwards;
+                    `;
+                }
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = '-10px';
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 4000);
+            }, i * 150);
+        }
+    }
+    
+    // Add CSS for guest screen confetti
+    const guestConfettiStyle = document.createElement('style');
+    guestConfettiStyle.textContent = `
+        @keyframes guestConfettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(guestConfettiStyle);
+    
+    // Check for guest list on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        const hasGuestList = checkForGuestList();
+        
+        // Only initialize normal components if no guest list is shown
+        if (!hasGuestList) {
+            // Existing initialization code here
+        }
+    });
 
     // Add to calendar functionality
     window.addToCalendar = function () {
@@ -450,7 +692,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize everything
     console.log('🦁 Lion King Birthday Page Loaded Successfully!');
-});
 
 // Confetti function (global scope)
 function createConfetti() {
@@ -685,4 +926,6 @@ initEyeFollowing();
 window.onload = function () {
     // Any additional initialization
 };
+
+// End of file
 
