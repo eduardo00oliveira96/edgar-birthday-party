@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </h1>
                 
                 <div style="margin: 30px 0;">
-                    <i class="fas fa-crown" style="font-size: 3rem; color: #FFD700; margin-bottom: 20px;"></i>
+                    <img src="/images/didi-favicon.png" alt="Edgar" style="width: 120px; height: 120px; margin-bottom: 20px; object-fit: contain;">
                     <h2 style="color: #8B4513; font-size: 2rem; margin: 20px 0;">Olá, ${decodedName}!</h2>
                     <p style="font-size: 1.3rem; color: #666; margin: 20px 0; line-height: 1.6;">
                         Você está convidado para a festa temática do <strong>Rei Leão</strong> em homenagem ao aniversário do nosso querido <strong>Edgar</strong>!
