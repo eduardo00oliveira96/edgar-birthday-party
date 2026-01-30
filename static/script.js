@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Background Music Setup
     const bgMusic = new Audio('/music/Hakuna Matata.mp3');
-    bgMusic.volume = 0.3;
+    bgMusic.volume = 0.2;
     bgMusic.loop = true;
 
     // Try to play immediately (will likely be blocked by browser, but we try)
