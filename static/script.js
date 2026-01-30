@@ -6,19 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const guestsParam = urlParams.get('guests');
     const adminParam = urlParams.get('admin');
     const inviteParam = urlParams.get('invite');
-    
+
     // Admin screen
     if (adminParam === 'true') {
         showAdminScreen();
         return;
     }
-    
+
     // Individual guest invitation
     if (inviteParam) {
         showPersonalInvitation(inviteParam);
         return;
     }
-    
+
     // Group guest list
     if (guestsParam) {
         showGuestList(guestsParam);
@@ -30,11 +30,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const mainContent = document.getElementById('mainContent');
     const enterButton = document.getElementById('enterButton');
 
+    // Background Music Setup
+    const bgMusic = new Audio('/music/Hakuna Matata.mp3');
+    bgMusic.volume = 0.3;
+    bgMusic.loop = true;
+
+    // Try to play immediately (will likely be blocked by browser, but we try)
+    bgMusic.play().catch(e => console.log("Áudio aguardando interação do usuário"));
+
     // Enter button click event
     enterButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        
+
+        // Ensure music plays on interaction
+        if (bgMusic.paused) {
+            bgMusic.play().catch(e => console.error("Erro ao reproduzir áudio:", e));
+        }
+
         preloader.classList.add('fade-out');
 
         setTimeout(() => {
@@ -43,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Initialize all components after entrance
             initializeComponents();
-            
+
             // Ensure we're at the top of the page
             setTimeout(() => {
                 window.scrollTo(0, 0);
@@ -425,24 +438,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start particle effect every 5 seconds
     setInterval(createEdgarParticles, 5000);
-    
+
     // Also trigger particles on special events
-    window.createSpecialParticles = function() {
+    window.createSpecialParticles = function () {
         createEdgarParticles();
     };
-    
+
     // Secret guest list functionality
     function checkForGuestList() {
         const urlParams = new URLSearchParams(window.location.search);
         const guestsParam = urlParams.get('guests');
-        
+
         if (guestsParam) {
             showGuestList(guestsParam);
             return true;
         }
         return false;
     }
-    
+
     // Admin Screen Function
     function showAdminScreen() {
         // Hide main content
@@ -450,13 +463,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (mainContent) {
             mainContent.style.display = 'none';
         }
-        
+
         // Hide preloader if visible
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.style.display = 'none';
         }
-        
+
         // Create admin screen
         const adminScreen = document.createElement('div');
         adminScreen.id = 'admin-screen';
@@ -476,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
             box-sizing: border-box;
             overflow-y: auto;
         `;
-        
+
         // Header
         const header = document.createElement('div');
         header.innerHTML = `
@@ -487,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Cadastro de Convidados - Aniversário do Edgar
             </p>
         `;
-        
+
         // Admin panel container
         const panelContainer = document.createElement('div');
         panelContainer.style.cssText = `
@@ -498,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function () {
             width: 95%;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         `;
-        
+
         // Guest input section
         const inputSection = document.createElement('div');
         inputSection.innerHTML = `
@@ -534,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 transition: all 0.3s ease;
             ">Gerar Links</button>
         `;
-        
+
         // Guest list display
         const listContainer = document.createElement('div');
         listContainer.id = 'guestListContainer';
@@ -546,12 +559,12 @@ document.addEventListener('DOMContentLoaded', function () {
             border-radius: 15px;
             padding: 15px;
         `;
-        
+
         listContainer.innerHTML = `
             <h3 style="color: #8B4513; margin-bottom: 15px; text-align: center;">Convidados Cadastrados (0)</h3>
             <div id="guestList" style="min-height: 50px;"></div>
         `;
-        
+
         // Generated links section
         const linksContainer = document.createElement('div');
         linksContainer.id = 'linksContainer';
@@ -559,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function () {
             margin-top: 30px;
             display: none;
         `;
-        
+
         linksContainer.innerHTML = `
             <h3 style="color: #8B4513; margin-bottom: 15px; text-align: center;">Links Gerados</h3>
             <div id="generatedLinks" style="background: #f8f9fa; padding: 20px; border-radius: 10px;"></div>
@@ -576,11 +589,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 display: none;
             ">Copiar Todos os Links</button>
         `;
-        
+
         // Back button
         const backButton = document.createElement('button');
         backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Voltar para o Site';
-        backButton.onclick = function() {
+        backButton.onclick = function () {
             window.location.href = window.location.origin + window.location.pathname;
         };
         backButton.style.cssText = `
@@ -599,22 +612,22 @@ document.addEventListener('DOMContentLoaded', function () {
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         `;
-        
+
         // Assemble the screen
         panelContainer.appendChild(inputSection);
         panelContainer.appendChild(listContainer);
         panelContainer.appendChild(linksContainer);
         panelContainer.appendChild(backButton);
-        
+
         adminScreen.appendChild(header);
         adminScreen.appendChild(panelContainer);
-        
+
         document.body.appendChild(adminScreen);
-        
+
         // Initialize admin functionality
         initializeAdminFunctionality();
     }
-    
+
     // Initialize admin functionality
     function initializeAdminFunctionality() {
         const guestNameInput = document.getElementById('guestName');
@@ -624,11 +637,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const generatedLinks = document.getElementById('generatedLinks');
         const linksContainer = document.getElementById('linksContainer');
         const copyAllLinksBtn = document.getElementById('copyAllLinks');
-        
+
         let guests = [];
-        
+
         // Add guest function
-        addGuestBtn.addEventListener('click', function() {
+        addGuestBtn.addEventListener('click', function () {
             const name = guestNameInput.value.trim();
             if (name) {
                 guests.push(name);
@@ -636,34 +649,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateGuestList();
             }
         });
-        
+
         // Generate links function
-        generateLinksBtn.addEventListener('click', function() {
+        generateLinksBtn.addEventListener('click', function () {
             if (guests.length > 0) {
                 generateIndividualLinks(guests);
             } else {
                 alert('Por favor, adicione pelo menos um convidado!');
             }
         });
-        
+
         // Copy all links function
-        copyAllLinksBtn.addEventListener('click', function() {
+        copyAllLinksBtn.addEventListener('click', function () {
             const linksText = Array.from(document.querySelectorAll('.individual-link')).map(el => el.textContent).join('\n\n');
             navigator.clipboard.writeText(linksText).then(() => {
                 alert('Todos os links foram copiados para a área de transferência!');
             });
         });
-        
+
         // Update guest list display
         function updateGuestList() {
             const title = document.querySelector('#guestListContainer h3');
             title.textContent = `Convidados Cadastrados (${guests.length})`;
-            
+
             if (guests.length === 0) {
                 guestList.innerHTML = '<p style="text-align: center; color: #666;">Nenhum convidado cadastrado ainda.</p>';
                 return;
             }
-            
+
             guestList.innerHTML = '';
             guests.forEach((guest, index) => {
                 const guestItem = document.createElement('div');
@@ -677,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     border-radius: 8px;
                     border-left: 4px solid #FFD700;
                 `;
-                
+
                 guestItem.innerHTML = `
                     <span style="font-weight: 500; color: #8B4513;">${index + 1}. ${guest}</span>
                     <button onclick="removeGuest(${index})" style="
@@ -690,19 +703,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         font-size: 0.9rem;
                     ">Remover</button>
                 `;
-                
+
                 guestList.appendChild(guestItem);
             });
         }
-        
+
         // Generate individual links
         function generateIndividualLinks(guestList) {
             generatedLinks.innerHTML = '';
-            
+
             guestList.forEach((guest, index) => {
                 const encodedName = encodeURIComponent(guest);
                 const link = `${window.location.origin}${window.location.pathname}?invite=${encodedName}`;
-                
+
                 const linkDiv = document.createElement('div');
                 linkDiv.style.cssText = `
                     background: white;
@@ -712,7 +725,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     border: 1px solid #DDD;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
                 `;
-                
+
                 linkDiv.innerHTML = `
                     <div style="font-weight: 600; color: #8B4513; margin-bottom: 8px;">${index + 1}. ${guest}</div>
                     <div class="individual-link" style="
@@ -734,30 +747,30 @@ document.addEventListener('DOMContentLoaded', function () {
                         font-size: 0.9rem;
                     ">Copiar Link</button>
                 `;
-                
+
                 generatedLinks.appendChild(linkDiv);
             });
-            
+
             linksContainer.style.display = 'block';
             copyAllLinksBtn.style.display = 'block';
         }
-        
+
         // Make functions globally available
-        window.removeGuest = function(index) {
+        window.removeGuest = function (index) {
             guests.splice(index, 1);
             updateGuestList();
         };
-        
-        window.copyLink = function(link) {
+
+        window.copyLink = function (link) {
             navigator.clipboard.writeText(link).then(() => {
                 alert('Link copiado para a área de transferência!');
             });
         };
-        
+
         // Initialize with empty list
         updateGuestList();
     }
-    
+
     // Personal Invitation Function
     function showPersonalInvitation(guestName) {
         // Hide main content
@@ -765,16 +778,79 @@ document.addEventListener('DOMContentLoaded', function () {
         if (mainContent) {
             mainContent.style.display = 'none';
         }
-        
+
         // Hide preloader if visible
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.style.display = 'none';
         }
-        
+
         // Decode guest name
         const decodedName = decodeURIComponent(guestName);
-        
+
+        // Add responsive styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                #personal-invitation .invite-card {
+                    padding: 20px !important;
+                    width: 100% !important;
+                    margin: 10px auto !important;
+                }
+                #personal-invitation h1 {
+                    font-size: 2rem !important;
+                    margin-bottom: 15px !important;
+                }
+                #personal-invitation h2 {
+                    font-size: 1.5rem !important;
+                    margin: 10px 0 !important;
+                }
+                #personal-invitation p {
+                    font-size: 1rem !important;
+                    margin: 10px 0 !important;
+                }
+                #personal-invitation .invite-details {
+                    padding: 15px !important;
+                    margin: 15px 0 !important;
+                }
+                #personal-invitation button {
+                    width: 100%;
+                    padding: 12px !important;
+                    font-size: 1rem !important;
+                    margin-top: 15px !important;
+                }
+                #personal-invitation img {
+                    width: 40% !important;
+                    max-width: 150px !important;
+                    margin-bottom: 10px !important;
+                }
+            }
+            @media (max-width: 480px) {
+                #personal-invitation .invite-card {
+                    padding: 15px !important;
+                }
+                #personal-invitation h1 {
+                    font-size: 1.6rem !important;
+                }
+                #personal-invitation h2 {
+                    font-size: 1.3rem !important;
+                }
+                #personal-invitation p {
+                    font-size: 0.95rem !important;
+                    line-height: 1.4 !important;
+                }
+                #personal-invitation .invite-details p {
+                     font-size: 0.9rem !important;
+                     margin: 5px 0 !important;
+                }
+                #personal-invitation img {
+                    width: 35% !important;
+                    max-width: 120px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
         // Create personal invitation screen
         const invitationScreen = document.createElement('div');
         invitationScreen.id = 'personal-invitation';
@@ -782,42 +858,45 @@ document.addEventListener('DOMContentLoaded', function () {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             z-index: 10000;
-            padding: 20px;
+            padding: 20px 10px;
             box-sizing: border-box;
             text-align: center;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         `;
-        
+
         invitationScreen.innerHTML = `
-            <div style="
+            <div class="invite-card" style="
                 background: rgba(255, 255, 255, 0.95);
-                border-radius: 25px;
-                padding: 40px;
-                max-width: 600px;
-                width: 90%;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                border-radius: 20px;
+                padding: 30px;
+                max-width: 550px;
+                width: 100%;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                margin: auto;
+                position: relative;
             ">
                 <h1 style="color: #8B4513; font-family: 'Dancing Script', cursive; font-size: 2.8rem; margin-bottom: 20px;">
                     🎉 Convite Especial 🎉
                 </h1>
                 
                 <div style="margin: 30px 0;">
-                    <img src="/images/didi-favicon.png" alt="Edgar" style="width: 120px; height: 120px; margin-bottom: 20px; object-fit: contain;">
+                    <img src="/images/didi-favicon.png" alt="Edgar" style="width: 50%; max-width: 200px; height: auto; margin-bottom: 20px; object-fit: contain;">
                     <h2 style="color: #8B4513; font-size: 2rem; margin: 20px 0;">Olá, ${decodedName}!</h2>
                     <p style="font-size: 1.3rem; color: #666; margin: 20px 0; line-height: 1.6;">
-                        Você está convidado para a festa temática do <strong>Rei Leão</strong> em homenagem ao aniversário do nosso querido <strong>Edgar</strong>!
+                        Você está oficialmente convidado para a grande Coroação do nosso pequeno Rei Edgar! <br> Venha celebrar o aniversário do nosso leãozinho mais amado, com muita aventura, amor e Hakuna Matata! 🦁👑
                     </p>
                 </div>
                 
-                <div style="background: linear-gradient(45deg, #FFF8DC, #FFEBCD); padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid #FFD700;">
-                    <h3 style="color: #8B4513; margin-bottom: 15px;">Hotéis o evento:</h3>
+                <div class="invite-details" style="background: linear-gradient(45deg, #FFF8DC, #FFEBCD); padding: 20px; border-radius: 15px; margin: 25px 0; border: 2px solid #FFD700;">
+                    <h3 style="color: #8B4513; margin-bottom: 15px;">Detalhes do evento:</h3>
                     <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-calendar-alt"></i> Data: 05/05/2026</p>
                     <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-clock"></i> Horário: 18:30</p>
                     <p style="font-size: 1.1rem; color: #666; margin: 10px 0;"><i class="fas fa-map-marker-alt"></i> Local: Buffet Kids World</p>
@@ -840,20 +919,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 </button>
             </div>
         `;
-        
+
         document.body.appendChild(invitationScreen);
-        
+
         // Add confetti effect
         setInterval(createPersonalInvitationConfetti, 2000);
     }
-    
+
     // Confetti for personal invitation
     function createPersonalInvitationConfetti() {
         const container = document.getElementById('personal-invitation');
         if (!container) return;
-        
+
         const colors = ['#FFD700', '#8B4513', '#FFA500'];
-        
+
         for (let i = 0; i < 6; i++) {
             setTimeout(() => {
                 const particle = document.createElement('div');
@@ -868,9 +947,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     left: ${Math.random() * 100}%;
                     top: -20px;
                 `;
-                
+
                 container.appendChild(particle);
-                
+
                 setTimeout(() => {
                     if (particle.parentNode) {
                         particle.parentNode.removeChild(particle);
@@ -879,7 +958,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, i * 200);
         }
     }
-    
+
     // Add CSS for personal invitation confetti
     const personalConfettiStyle = document.createElement('style');
     personalConfettiStyle.textContent = `
@@ -895,23 +974,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     `;
     document.head.appendChild(personalConfettiStyle);
-    
+
     function showGuestList(guestsString) {
         // Hide main content
         const mainContent = document.getElementById('mainContent');
         if (mainContent) {
             mainContent.style.display = 'none';
         }
-        
+
         // Hide preloader if visible
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.style.display = 'none';
         }
-        
+
         // Parse guest names
         const guests = guestsString.split(',').map(name => name.trim()).filter(name => name);
-        
+
         // Create guest list screen
         const guestScreen = document.createElement('div');
         guestScreen.id = 'guest-screen';
@@ -930,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', function () {
             padding: 20px;
             box-sizing: border-box;
         `;
-        
+
         // Header
         const header = document.createElement('div');
         header.innerHTML = `
@@ -941,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 Festa do Rei Leão - Aniversário do Edgar
             </p>
         `;
-        
+
         // Guest list container
         const listContainer = document.createElement('div');
         listContainer.style.cssText = `
@@ -954,15 +1033,15 @@ document.addEventListener('DOMContentLoaded', function () {
             overflow-y: auto;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         `;
-        
+
         // Guest list
         const listTitle = document.createElement('h2');
         listTitle.textContent = `Convidados (${guests.length})`;
         listTitle.style.cssText = `color: #8B4513; text-align: center; margin-bottom: 20px; font-size: 1.8rem;`;
-        
+
         const guestList = document.createElement('ul');
         guestList.style.cssText = `list-style: none; padding: 0; margin: 0;`;
-        
+
         guests.forEach((guest, index) => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
@@ -994,11 +1073,11 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             guestList.appendChild(listItem);
         });
-        
+
         // Back button
         const backButton = document.createElement('button');
         backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Voltar para o Site';
-        backButton.onclick = function() {
+        backButton.onclick = function () {
             window.location.href = window.location.origin + window.location.pathname;
         };
         backButton.style.cssText = `
@@ -1017,45 +1096,45 @@ document.addEventListener('DOMContentLoaded', function () {
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         `;
-        backButton.onmouseover = function() {
+        backButton.onmouseover = function () {
             this.style.transform = 'translateY(-3px)';
             this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
         };
-        backButton.onmouseout = function() {
+        backButton.onmouseout = function () {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
         };
-        
+
         // Assemble the screen
         listContainer.appendChild(listTitle);
         listContainer.appendChild(guestList);
         listContainer.appendChild(backButton);
-        
+
         guestScreen.appendChild(header);
         guestScreen.appendChild(listContainer);
-        
+
         document.body.appendChild(guestScreen);
-        
+
         // Add confetti effect to guest screen
         setInterval(() => {
             createGuestScreenConfetti();
         }, 3000);
     }
-    
+
     // Special confetti for guest screen
     function createGuestScreenConfetti() {
         const container = document.getElementById('guest-screen');
         if (!container) return;
-        
+
         const colors = ['#FFD700', '#8B4513', '#FFA500', '#CD853F'];
         const shapes = ['rectangle', 'circle'];
-        
+
         for (let i = 0; i < 8; i++) {
             setTimeout(() => {
                 const particle = document.createElement('div');
                 const shape = shapes[Math.floor(Math.random() * shapes.length)];
                 const color = colors[Math.floor(Math.random() * colors.length)];
-                
+
                 if (shape === 'rectangle') {
                     particle.style.cssText = `
                         position: absolute;
@@ -1077,12 +1156,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         animation: guestConfettiFall 4s linear forwards;
                     `;
                 }
-                
+
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = '-10px';
-                
+
                 container.appendChild(particle);
-                
+
                 setTimeout(() => {
                     if (particle.parentNode) {
                         particle.parentNode.removeChild(particle);
@@ -1091,7 +1170,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, i * 150);
         }
     }
-    
+
     // Add CSS for guest screen confetti
     const guestConfettiStyle = document.createElement('style');
     guestConfettiStyle.textContent = `
@@ -1107,11 +1186,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     `;
     document.head.appendChild(guestConfettiStyle);
-    
+
     // Check for guest list on page load
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', function () {
         const hasGuestList = checkForGuestList();
-        
+
         // Only initialize normal components if no guest list is shown
         if (!hasGuestList) {
             // Existing initialization code here
