@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const enterButton = document.getElementById('enterButton');
 
     // Enter button click event
-    enterButton.addEventListener('click', function () {
+    enterButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         preloader.classList.add('fade-out');
 
         setTimeout(() => {
@@ -17,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Initialize all components after entrance
             initializeComponents();
+            
+            // Prevent any scroll behavior
+            window.scrollTo(0, 0);
         }, 1000);
     });
 
