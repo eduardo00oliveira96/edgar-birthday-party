@@ -1407,6 +1407,35 @@ body {
         z-index: 1000;
     }
 
+    /* PIX Section Responsive */
+    .pix-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .qr-placeholder {
+        width: 150px;
+        height: 150px;
+    }
+
+    .qr-placeholder i {
+        font-size: 50px !important;
+    }
+
+    .pix-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .key-display {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .copy-btn {
+        align-self: flex-start;
+    }
+
     .nav-links.active {
         display: flex;
     }
@@ -1482,6 +1511,50 @@ body {
 
     .next {
         right: 10px;
+    }
+
+    /* PIX Section Extra Small Screens */
+    .pix-card {
+        padding: 20px;
+    }
+
+    .pix-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .pix-header p {
+        font-size: 0.9rem;
+    }
+
+    .qr-placeholder {
+        width: 120px;
+        height: 120px;
+    }
+
+    .qr-placeholder i {
+        font-size: 40px !important;
+    }
+
+    .qr-placeholder p {
+        font-size: 0.8rem;
+    }
+
+    .key-display {
+        padding: 8px 12px;
+    }
+
+    .key-display span {
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+
+    .copy-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .copy-btn i {
+        font-size: 0.8rem;
     }
 }
 
