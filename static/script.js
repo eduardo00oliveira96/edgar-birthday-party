@@ -914,6 +914,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     margin-top: 25px;
                     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
                     transition: all 0.3s ease;
+                    animation: pulse 2s infinite;
                 ">
                     <i class="fas fa-paw"></i> Entrar na Savana
                 </button>

@@ -114,8 +114,8 @@ body {
 }
 
 .enter-button {
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    color: #8B4513;
+    background: linear-gradient(45deg, #8B4513, #D2691E);
+    color: #FFD700;
     border: none;
     padding: 15px 40px;
     font-size: 1.2rem;
@@ -935,7 +935,9 @@ body {
 
 .qr-placeholder {
     width: 200px;
-    height: 200px;
+    min-height: 200px;
+    height: auto;
+    padding: 15px;
     background: #f8f9fa;
     border: 3px dashed #8B4513;
     border-radius: 15px;
@@ -1312,14 +1314,17 @@ body {
 @keyframes pulse {
     0% {
         transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.15);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
     }
 
     100% {
         transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
     }
 }
 
