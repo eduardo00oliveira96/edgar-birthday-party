@@ -15,7 +15,3 @@ temp/
 # Arquivos de backup
 *.bak
 *.backup
-
-# Arquivos compilados
-*.min.css
-*.min.js
